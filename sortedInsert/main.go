@@ -3,22 +3,22 @@ package main
 import "fmt"
 
 func main() {
-	f := DoublyLinkedListNode{data: 2}
-	s := DoublyLinkedListNode{data: 3}
-	h := DoublyLinkedListNode{data: 10}
+	head := DoublyLinkedListNode{data: 2}
+	h1 := DoublyLinkedListNode{data: 3}
+	h2 := DoublyLinkedListNode{data: 10}
 
-	f.next = &s
-	s.prev = &f
-	s.next = &h
-	h.prev = &s
-	h.next = nil
+	head.next = &h1
+	h1.prev = &head
+	h1.next = &h2
+	h2.prev = &h1
+	h2.next = nil
 
-	srtH := sortedInsert(&h, 7)
+	srtH := sortedInsert(&head, 1)
 
 	node := srtH
 	for node != nil {
 		fmt.Println(node.data)
-		node = node.prev
+		node = node.next
 	}
 }
 
@@ -34,30 +34,28 @@ func sortedInsert(head *DoublyLinkedListNode, data int32) *DoublyLinkedListNode 
 
 	curHead := head
 	for curHead != nil {
-		if data > curHead.data {
-
-			if curHead.next == nil {
-				newNode.prev = curHead
-				newNode.next = nil
-				curHead.next = newNode
-				return newNode
+		if data < curHead.data {
+			newNode.next = curHead
+			newNode.prev = curHead.prev
+			if curHead.prev != nil {
+				curHead.prev.next = newNode
 			}
+			curHead.prev = newNode
 
-			newNode.prev = curHead
-			newNode.next = curHead.next
-			curHead.next.prev = newNode
-			curHead.next = newNode
-
-			return head
+			if curHead != head {
+				return head
+			}
+			return newNode
 		}
-		if curHead.prev == nil {
+
+		if curHead.next == nil {
 			break
 		}
-		curHead = curHead.prev
+		curHead = curHead.next
 	}
 
-	// if the smallest data num
-	newNode.next = curHead
-	curHead.prev = newNode
+	curHead.next = newNode
+	newNode.prev = curHead
+	newNode.next = nil
 	return head
 }
