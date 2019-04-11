@@ -8,8 +8,8 @@ import (
 
 func main() {
 
-	//s := encryption("haveaniceday")
-	s := encryption("if man was meant to stay on the ground god would have given us roots")
+	s := encryption("wclwfoznbmyycxvaxagjhtexdkwjqhlojykopldsxesbbnezqmixfpujbssrbfhlgubvfhpfliimvmnny")
+	//s := encryption("if man was meant to stay on the ground god would have given us roots")
 	fmt.Println(s)
 }
 
@@ -25,10 +25,9 @@ func encryption(s string) string {
 	rows := int(sqrt)
 	columns := rows + 1
 
-	fmt.Println("len: ", len(s))
-	fmt.Println("sqrt: ", sqrt)
-	fmt.Println("rows: ", rows)
-	fmt.Println("columns: ", columns)
+	if sqrt == math.Trunc(sqrt) {
+		columns = rows
+	}
 
 	var encoded strings.Builder
 
